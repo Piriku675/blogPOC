@@ -1,0 +1,15 @@
+{
+  "name": "blog-article-poc",
+  "version": "1.0.0",
+  "description": "Blog Article POC — structured content rendering from Firestore",
+  "type": "module",
+  "scripts": {
+    "seed": "node seed.js"
+  },
+  "dependencies": {
+    "firebase-admin": "^12.7.0"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}
