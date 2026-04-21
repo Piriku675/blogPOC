@@ -1,0 +1,280 @@
+/* ─── styles.css ──────────────────────────────────────────────────────────────
+   Design system: editorial, content-first, refined typographic rhythm.
+   Fonts: Playfair Display (display) + Source Serif 4 (body)
+   ──────────────────────────────────────────────────────────────────────────── */
+
+/* ── Tokens ──────────────────────────────────────────────────────────────── */
+:root {
+  /* Colors */
+  --color-bg:         #f8f7f4;
+  --color-surface:    #ffffff;
+  --color-text:       #1a1916;
+  --color-text-muted: #6b6760;
+  --color-divider:    #e2dfd9;
+  --color-accent:     #b5843a;
+
+  /* Typography */
+  --font-display: 'Playfair Display', Georgia, serif;
+  --font-body:    'Source Serif 4', Georgia, serif;
+
+  /* Spacing scale */
+  --space-xs:  0.375rem;   /*  6px */
+  --space-sm:  0.75rem;    /* 12px */
+  --space-md:  1.5rem;     /* 24px */
+  --space-lg:  3rem;       /* 48px */
+  --space-xl:  5rem;       /* 80px */
+
+  /* Layout */
+  --content-max-width: 740px;
+  --padding-inline:    clamp(1.25rem, 5vw, 2.5rem);
+
+  /* Radius */
+  --radius-sm: 3px;
+
+  /* Transitions */
+  --ease: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* ── Reset ───────────────────────────────────────────────────────────────── */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-size: 18px;
+  -webkit-text-size-adjust: 100%;
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: var(--color-bg);
+  color: var(--color-text);
+  font-family: var(--font-body);
+  font-weight: 300;
+  line-height: 1.75;
+  min-height: 100dvh;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+img, video, iframe {
+  display: block;
+  max-width: 100%;
+}
+
+/* ── Layout ──────────────────────────────────────────────────────────────── */
+#article-root {
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+}
+
+.article {
+  width: 100%;
+  max-width: var(--content-max-width);
+  margin-inline: auto;
+  padding: var(--space-xl) var(--padding-inline);
+}
+
+/* ── State Screens ───────────────────────────────────────────────────────── */
+.state-screen {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-md);
+  color: var(--color-text-muted);
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+  min-height: 60vh;
+}
+
+.state-screen svg {
+  stroke: var(--color-text-muted);
+  opacity: 0.6;
+}
+
+.hidden { display: none !important; }
+
+/* Spinner */
+.spinner {
+  width: 36px;
+  height: 36px;
+  border: 2px solid var(--color-divider);
+  border-top-color: var(--color-accent);
+  border-radius: 50%;
+  animation: spin 0.9s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* ── Article Title ───────────────────────────────────────────────────────── */
+.article-title {
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 5vw, 3.25rem);
+  font-weight: 900;
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+  color: var(--color-text);
+  margin-bottom: var(--space-lg);
+}
+
+/* ── Dividers ────────────────────────────────────────────────────────────── */
+.divider {
+  border: none;
+  border-top: 1px solid var(--color-divider);
+  margin-block: var(--space-lg);
+}
+
+.divider.title-divider {
+  margin-top: 0;
+  margin-bottom: var(--space-lg);
+}
+
+/* ── Sections ────────────────────────────────────────────────────────────── */
+.section {
+  width: 100%;
+}
+
+/* Single column */
+.section--singleColumn .section__column {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+}
+
+/* Two column */
+.section--twoColumn {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-lg);
+  align-items: start;
+}
+
+.section--twoColumn .section__column {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+}
+
+@media (max-width: 640px) {
+  .section--twoColumn {
+    grid-template-columns: 1fr;
+    gap: var(--space-md);
+  }
+}
+
+/* ── Blocks — Headers ────────────────────────────────────────────────────── */
+.block--header {
+  font-family: var(--font-display);
+  line-height: 1.25;
+  letter-spacing: -0.01em;
+  color: var(--color-text);
+}
+
+.block--header-1 {
+  font-size: clamp(1.6rem, 3.5vw, 2.25rem);
+  font-weight: 700;
+}
+
+.block--header-2 {
+  font-size: clamp(1.25rem, 2.5vw, 1.65rem);
+  font-weight: 700;
+}
+
+.block--header-3 {
+  font-size: clamp(1.05rem, 2vw, 1.25rem);
+  font-weight: 700;
+  color: var(--color-text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-family: var(--font-body);
+}
+
+/* ── Blocks — Paragraph ──────────────────────────────────────────────────── */
+.block--paragraph {
+  font-size: 1rem;
+  font-weight: 300;
+  line-height: 1.8;
+  color: var(--color-text);
+  max-width: 68ch;
+}
+
+/* In two-column layout paragraphs shouldn't be width-constrained */
+.section--twoColumn .block--paragraph {
+  max-width: unset;
+}
+
+/* ── Blocks — Image ──────────────────────────────────────────────────────── */
+.block--image {
+  width: 100%;
+}
+
+/* 4:3 aspect ratio container */
+.image-ratio-box {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  overflow: hidden;
+  border-radius: var(--radius-sm);
+  background-color: var(--color-divider);
+}
+
+.image-ratio-box img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s var(--ease);
+}
+
+.image-ratio-box img:hover {
+  transform: scale(1.02);
+}
+
+.image-caption {
+  margin-top: var(--space-xs);
+  font-size: 0.8rem;
+  font-weight: 400;
+  color: var(--color-text-muted);
+  font-style: italic;
+  line-height: 1.5;
+}
+
+/* ── Blocks — Video ──────────────────────────────────────────────────────── */
+.block--video {
+  width: 100%;
+}
+
+/* 16:9 aspect ratio container */
+.video-ratio-box {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  border-radius: var(--radius-sm);
+  background-color: var(--color-text);
+}
+
+.video-ratio-box iframe {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border: none;
+}
+
+/* ── Print ───────────────────────────────────────────────────────────────── */
+@media print {
+  .state-screen { display: none; }
+  .article { padding: 0; }
+  .divider { border-top-color: #ccc; }
+  .image-ratio-box img { position: static; height: auto; }
+  .video-ratio-box { display: none; }
+}

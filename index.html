@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Article</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Source+Serif+4:ital,wght@0,300;0,400;0,600;1,300;1,400&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/styles.css" />
+
+  <!-- Firebase v9 compat (CDN) -->
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+</head>
+<body>
+
+  <div id="article-root">
+    <div id="loading-state" class="state-screen">
+      <div class="spinner"></div>
+      <p>Loading article…</p>
+    </div>
+    <div id="error-state" class="state-screen hidden">
+      <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+        <circle cx="12" cy="12" r="10"/>
+        <line x1="12" y1="8" x2="12" y2="12"/>
+        <line x1="12" y1="16" x2="12.01" y2="16"/>
+      </svg>
+      <p id="error-message">Something went wrong.</p>
+    </div>
+    <div id="article-container" class="hidden"></div>
+  </div>
+
+  <script type="module">
+    import { initFirebase } from './js/data-service.js';
+    import { fetchArticle } from './js/data-service.js';
+    import { renderArticle } from './js/render.js';
+
+    const ARTICLE_ID = 'demo-article-001';
+
+    async function boot() {
+      try {
+        initFirebase();
+        const article = await fetchArticle(ARTICLE_ID);
+        document.getElementById('loading-state').classList.add('hidden');
+        const container = document.getElementById('article-container');
+        container.classList.remove('hidden');
+        renderArticle(article, container);
+      } catch (err) {
+        document.getElementById('loading-state').classList.add('hidden');
+        const errScreen = document.getElementById('error-state');
+        errScreen.classList.remove('hidden');
+        document.getElementById('error-message').textContent = err.message || 'Failed to load article.';
+        console.error(err);
+      }
+    }
+
+    boot();
+  </script>
+</body>
+</html>
